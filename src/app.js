@@ -1,3 +1,5 @@
-import hello from "./modules/hello";
- 
-hello()
+import renderForm from "./modules/renderForm";
+import searchCode from "./modules/searchCode";
+
+renderForm()
+searchCode()

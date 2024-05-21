@@ -9,28 +9,108 @@
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_hello__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/hello */ "./src/modules/hello.js");
+/* harmony import */ var _modules_renderForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/renderForm */ "./src/modules/renderForm.js");
+/* harmony import */ var _modules_searchCode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/searchCode */ "./src/modules/searchCode.js");
 
-(0,_modules_hello__WEBPACK_IMPORTED_MODULE_0__["default"])();
+
+(0,_modules_renderForm__WEBPACK_IMPORTED_MODULE_0__["default"])();
+(0,_modules_searchCode__WEBPACK_IMPORTED_MODULE_1__["default"])();
 
 /***/ }),
 
-/***/ "./src/modules/hello.js":
-/*!******************************!*\
-  !*** ./src/modules/hello.js ***!
-  \******************************/
+/***/ "./src/modules/ajaxService.js":
+/*!************************************!*\
+  !*** ./src/modules/ajaxService.js ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var hello = function hello() {
-  var h1 = document.createElement('h1');
-  h1.textContent = 'Labas';
-  document.querySelector('body').appendChild(h1);
+var ajaxSevice = function ajaxSevice(term) {
+  var url = 'http://www.omdbapi.com/?t=';
+  var key = 'fb31e168';
+  return fetch("".concat(url).concat(term, "&apikey=").concat(key)).then(function (response) {
+    return response.json();
+  });
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (hello);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ajaxSevice);
+
+/***/ }),
+
+/***/ "./src/modules/form.js":
+/*!*****************************!*\
+  !*** ./src/modules/form.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var form = function form() {
+  return "<div class=\"form-group mb-2\">\n                <div class=\"error-message\" style=\"color: red; display: none;\">Neteisingai ivestas pavadinimas</div>\n                <input type=\"text\" class=\"form-control term\" placeholder=\"Filmo pavadinimas:\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary mb-2\">Ieskoti filmo</button>\n            <div class=\"result\"></div>\n            ";
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (form);
+
+/***/ }),
+
+/***/ "./src/modules/renderForm.js":
+/*!***********************************!*\
+  !*** ./src/modules/renderForm.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/modules/form.js");
+
+var renderForm = function renderForm() {
+  var formElement = document.createElement('form');
+  formElement.className = 'form-inline';
+  formElement.innerHTML = (0,_form__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  document.querySelector('.card-body').appendChild(formElement);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (renderForm);
+
+/***/ }),
+
+/***/ "./src/modules/searchCode.js":
+/*!***********************************!*\
+  !*** ./src/modules/searchCode.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ajaxService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ajaxService */ "./src/modules/ajaxService.js");
+
+var createMovieCard = function createMovieCard(movie) {
+  return "\n        <div class=\"card mt-3\">\n            <div class=\"card-header\">\n                <h2>".concat(movie.Title, "</h2>\n            </div>\n            <div class=\"card-body\">\n                <img src=\"").concat(movie.Poster, "\" alt=\"").concat(movie.Title, " Poster\" class=\"img-fluid mb-3\"/>\n                <p><strong>Writer:</strong> ").concat(movie.Writer, "</p>\n                <p><strong>Awards:</strong> ").concat(movie.Awards, "</p>\n                <p><strong>Runtime:</strong> ").concat(movie.Runtime, "</p>\n                <p><strong>imDB Rating:</strong> ").concat(movie.imdbRating, "</p>\n                <p><strong>Release Date:</strong> ").concat(movie.Released, "</p>\n                <p><strong>Actors:</strong> ").concat(movie.Actors, "</p>\n                <p><strong>Genre:</strong> ").concat(movie.Genre, "</p>\n                <p><strong>Director:</strong> ").concat(movie.Director, "</p>\n                <p><strong>Plot:</strong> ").concat(movie.Plot, "</p>\n            </div>\n        </div>\n    ");
+};
+var searchCode = function searchCode() {
+  document.querySelector('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var searchTerm = document.querySelector('.term').value;
+    var searchResponse;
+    (0,_ajaxService__WEBPACK_IMPORTED_MODULE_0__["default"])(searchTerm).then(function (result) {
+      searchResponse = result;
+      if (searchResponse.Response === "False") {
+        document.querySelector('.error-message').style.display = 'block';
+      } else {
+        document.querySelector('.error-message').style.display = 'none';
+        var movieCardHTML = createMovieCard(searchResponse);
+        document.querySelector('.result').innerHTML = movieCardHTML;
+      }
+    });
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (searchCode);
 
 /***/ }),
 
