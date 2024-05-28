@@ -7,16 +7,26 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <section class="container text-center">
-        <h1>Filmu paieska</h1>
-        <div class="card">
-          <div class="card-body">
-            
-          </div>
+    <nav class="menu">
+        <ul class="menu__list">
+            <li class="menu__item"><a href="#" id="home-link">Home</a></li>
+            <li class="menu__item"><a href="#" id="jokes-link">Joke List</a></li>
+        </ul>
+    </nav>
+    <div id="content">
+        <div id="home" class="home">
+            <form class="home__form" id="search-form">
+                <select class="home__select" id="category-select"></select>
+                <input type="text" class="home__input" id="search-input" placeholder="Search for a joke...">
+                <button type="submit" class="home__button">Search</button>
+            </form>
+            <div id="jokes" class="jokes"></div>
         </div>
-      </section>
-    
-    
+        <div id="joke-list" class="joke-list">
+            <h2>Saved Jokes</h2>
+            <div id="saved-jokes" class="jokes"></div>
+        </div>
+    </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="app.js"></script>
